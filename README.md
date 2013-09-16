@@ -1,4 +1,4 @@
 Ruby2gis
 ========
 
-Ruby library to working with 2gis API
+Ruby library to working with 2gis API [WIP]
