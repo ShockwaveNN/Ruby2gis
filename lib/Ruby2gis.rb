@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require_relative '../lib/Project2gis'
 class Ruby2gis
   attr_accessor :api_key
   attr_accessor :version
@@ -26,9 +27,13 @@ class Ruby2gis
     projects_url = "http://catalog.api.2gis.ru/project/list?version=#{@version}&key=#{@api_key}"
     json = http_get(projects_url)
     if json['response_code'] == '200'
-      json['result']
+      projects_array = []
+      json['result'].each do |json_result|
+        projects_array << Project2gis.new(json_result)
+      end
+      projects_array
     else
-     fail '[Ruby2gis] Error while login'
+     raise "[Ruby2gis] Error while login with #{json['response_code']} error and error message: #{json['error_message']}"
     end
   end
 end
